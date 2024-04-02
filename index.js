@@ -142,8 +142,6 @@ if (message.content.startsWith('!ban2')) {
         }else {
           message.reply("Cette personne n'existe pas");
         }
-      }else {
-        message.reply("tu dois mentionner la personne pour le ban");
       }
     }
     
@@ -172,9 +170,7 @@ if (message.content.startsWith('!kick2')) {
         } else {
           message.reply("Cette personne n'existe pas!");
         }
-      } else {
-        message.reply("Tu dois mentionner la personne pour le kick");
-      }
+      } 
      }
     
     
@@ -215,8 +211,6 @@ if (message.content.startsWith('!timeout2')) {
         userTimeout.roles.remove(timeoutRole);
         message.channel.send(`${userTimeout.user.tag} à mangé son scotch, il peut de nouveau parler.`);
       }, 1 * 10 * 1000); 
-    }else {
-      message.reply("tu n'as pas mentionné la personne");
     }
   }
   
