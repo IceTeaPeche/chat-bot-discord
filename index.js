@@ -29,9 +29,18 @@ client.on('messageCreate', async (message) => {
          "```\n" +
   "Here are the available commands:\n" +
   "- !help : Show this help message\n" +
+  "- !Charles : For Charles\n" +
+  "- !duel @user : Duel with a user and the looser is kick from the server\n" +
+  "- !La roulette : Plays itself, you have a 1 in 3 chance of being kicked off the server\n" +
+  "- !La roulette (number): It plays itself, the number chosen corresponds to the number of times the trigger will be pressed, you have a chance on 3 to be kick of the server.\n" +
+  "- !nuke: Clear all messages in the channel\n" +
+  "- !pp @user : Get the profile picture of a user\n" +
   "- !kick @user : Kick a user from the server (admin only)\n" +
   "- !ban @user : Ban a user from the server (admin only)\n" +
   "- !timeout @user : timeout a user for 1 minute (admin only)\n" +
+  "- !timeout2 @user : timeout a user for 1 minute without admin\n" +
+  "- !kick2 @user : Kick a user from the server without admin\n" +
+  "- !ban2 @user : Ban a user from the server without admin\n" +
   "- ?your question : Ask a question to the bot\n" +
   "```"
     );
@@ -111,6 +120,61 @@ if (message.content.startsWith('!kick')) {
     } else {
       message.reply("Tu n'as pas le rôle pour cette commande!");
     }
+}
+    
+    
+     
+/////////// Gère le ban  sans etre admin  //////////////
+if (message.content.startsWith('!ban2')) {
+
+
+      const userban = message.mentions.users.first();
+      if (userban) {
+
+        const member = message.guild.members.cache.get(userban.id);
+        if (member) {
+          member.ban().then(() => {
+            message.reply(`${userban.tag} à quitté le serveur.`);
+          }).catch(err => {
+            message.reply('Marche pas');
+            console.error(err);
+          });
+        }else {
+          message.reply("Cette personne n'existe pas");
+        }
+      }else {
+        message.reply("tu dois mentionner la personne pour le ban");
+      }
+    }
+    
+
+
+
+
+
+
+
+/////////// Gère le kick sans etre admin   //////////////
+if (message.content.startsWith('!kick2')) {
+
+
+      const userkick = message.mentions.users.first();
+      if (userkick) {
+
+          const member = message.guild.members.cache.get(userkick.id);
+        if (member) {
+          member.kick().then(() => {
+            message.reply(` ${userkick.tag} est parti au goulag.`);
+          }).catch(err => {
+            message.reply('Marche pas');
+            console.error(err);
+          });
+        } else {
+          message.reply("Cette personne n'existe pas!");
+        }
+      } else {
+        message.reply("Tu dois mentionner la personne pour le kick");
+      }
      }
     
     
@@ -125,7 +189,7 @@ if (message.content.startsWith('!timeout')) {
     const timeoutRole = message.guild.roles.cache.find(role => role.name === "Chut !"); 
     if (userTimeout && timeoutRole) {
       userTimeout.roles.add(timeoutRole);
-      message.reply(` ${userTimeout.user.tag} à du scotch sur la  bouche pendant 10 secondes.`);
+      message.reply(` ${userTimeout.user.tag} à du scotch sur la  bouche pendant 1O secondes.`);
       setTimeout(() => {
         userTimeout.roles.remove(timeoutRole);
         message.channel.send(`${userTimeout.user.tag} à mangé son scotch, il peut de nouveau parler.`);
@@ -138,6 +202,24 @@ if (message.content.startsWith('!timeout')) {
   }
    }
 
+    
+    /////////// Gère le timeout  sans admin   //////////////
+if (message.content.startsWith('!timeout2')) {
+ 
+    const userTimeout = message.mentions.members.first();
+    const timeoutRole = message.guild.roles.cache.find(role => role.name === "Chut !"); 
+    if (userTimeout && timeoutRole) {
+      userTimeout.roles.add(timeoutRole);
+      message.reply(` ${userTimeout.user.tag} à du scotch sur la  bouche pendant 1O secondes.`);
+      setTimeout(() => {
+        userTimeout.roles.remove(timeoutRole);
+        message.channel.send(`${userTimeout.user.tag} à mangé son scotch, il peut de nouveau parler.`);
+      }, 1 * 10 * 1000); 
+    }else {
+      message.reply("tu n'as pas mentionné la personne");
+    }
+  }
+  
     
     
     
