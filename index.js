@@ -125,7 +125,7 @@ if (message.content.startsWith('!timeout')) {
     const timeoutRole = message.guild.roles.cache.find(role => role.name === "Chut !"); 
     if (userTimeout && timeoutRole) {
       userTimeout.roles.add(timeoutRole);
-      message.reply(` ${userTimeout.user.tag} à du scotch sur la  bouche pendant 1 minutes.`);
+      message.reply(` ${userTimeout.user.tag} à du scotch sur la  bouche pendant 10 secondes.`);
       setTimeout(() => {
         userTimeout.roles.remove(timeoutRole);
         message.channel.send(`${userTimeout.user.tag} à mangé son scotch, il peut de nouveau parler.`);
